@@ -1,22 +1,25 @@
 #include <stdio.h>
-void check_if_newline(char *c)
-{
-  if(c == '\n')
-    printf("CON_SHELL$");
-}
-void display_shell_prompt()
-{
-  char *c ='\0';
-  printf("\nCON_SHELL$ ");
-  while(c != EOF)
-    {
-      c = getchar();
-      process input(c);
-    }
-    printf("\n");
-}
+#include <string.h>
+#define BUFFER_LENGTH 512
 int main(int argc, char **argv, char **envp)
 {
-  display_shell_prompt();
+  char buffer[BUFFER_LENGTH];
+  char* path = "/bin"; 
+  while(1)
+  {    
+     //print the prompt
+     printf("myShell&gt;");
+     //get input
+     fgets(buffer, BUFFER_LENGTH, stdin);
+     int pid = fork();
+     if(pid !=0)
+       {
+	 wait(NULL);
+       }
+     else
+       {
+	 int rv = execv("/bin/date", argv);
+       }
+  }  
   return 0;
 }
