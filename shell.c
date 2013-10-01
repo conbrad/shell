@@ -25,30 +25,19 @@ int main(int argc, char **argv, char **envp)
 {
  char buffer[BUFFER_LENGTH];
  char* path = "/bin/";
- char* ls = "/bin/ls";
+ char* ls = "ls";
   while(1)
   {
     /* print the prompt */
     time_prompt();
-    
-    char* arg_list = NULL;
         
     /* get input */
      fgets(buffer, BUFFER_LENGTH, stdin);
      buffer[strlen(buffer) -1 ] = '\0';
      char* command;     
-     command = malloc(strlen(ls));
+     command = malloc(strlen(path)+strlen(buffer)+1);
      strcpy(command, path);
-     strcat(command, buffer);
-     printf("the command is: %s", command);
-     if (strcmp(ls, command) == 0)
-       {
-	 printf("And they are equal!\n");
-       }
-     else
-       {
-	 printf("they not equal\n");
-       }
+     strcat(command, buffer);          
      int pid = fork();
      if(pid !=0)
        {
@@ -57,7 +46,7 @@ int main(int argc, char **argv, char **envp)
      else
        {
 	 int rv = execv(command, argv);
-	 printf("code from execv is: %i", rv);
+	 printf("\n code from execv is: %i", rv);
        }
   }   
   return 0;
